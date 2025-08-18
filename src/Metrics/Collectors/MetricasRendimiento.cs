@@ -5,42 +5,77 @@ using BrigadasEmergenciaRD.Metrics.Models;
 
 namespace BrigadasEmergenciaRD.Metrics.Collectors
 {
-    // Recolector thread-safe basado en Interlocked y ConcurrentQueue
+    // Colector que implementa IMetricas.
+    // Caracteristicas:
+    // - Diseñado para uso desde multiples hilos.
+    // - EndOp no bloquea: encola latencia y usa atomicos para contadores.
+    // - Expone Start/Stop para medir ventana total del escenario (build de snapshot mas completo).
     public sealed class MetricasRendimiento : IMetricas
     {
+        // Estado interno almacenado en un buffer mutable
         private readonly MetricBuffer _buffer = new();
 
-        // Hook de inicio (placeholder)
+        // Hook opcional al inicio de una operacion (sin logica por ahora)
         public void BeginOp() { }
 
-        // Encola latencia y actualiza exito/fallo de forma atomica
+        // Registra latencia y exito/fallo de una operacion.
+        // - elapsedTicks: delta de Stopwatch.GetTimestamp()
+        // - success: true = ok, false = fallo
         public void EndOp(long elapsedTicks, bool success)
         {
             _buffer.LatenciasTicks.Enqueue(elapsedTicks);
-            if (success) Interlocked.Increment(ref _buffer.Exitos);
-            else Interlocked.Increment(ref _buffer.Fallos);
+            if (success)
+            {
+                // Interlocked.Increment incrementa de forma atomica sin locks
+                Interlocked.Increment(ref _buffer.Exitos);
+            }
+            else
+            {
+                Interlocked.Increment(ref _buffer.Fallos);
+            }
         }
 
-        // Suma bytes procesados de forma atomica
-        public void AddBytes(long bytes) { Interlocked.Add(ref _buffer.Bytes, bytes); }
+        // Suma bytes procesados (opcional segun escenario)
+        public void AddBytes(long bytes)
+        {
+            // Interlocked.Add para sumar de forma atomica
+            Interlocked.Add(ref _buffer.Bytes, bytes);
+        }
 
-        // Devuelve snapshot actual
+        // Construye un snapshot con estadisticos agregados
         public MetricSnapshot Snapshot()
         {
-            return MetricBuffer.ToSnapshot("default", _buffer, (int)(_buffer.Exitos + _buffer.Fallos), Environment.ProcessorCount);
+            // iteraciones = exitos + fallos
+            int iters = (int)(_buffer.Exitos + _buffer.Fallos);
+
+            // grado = referencia; usamos cores del sistema como valor por defecto
+            int grado = Math.Max(1, Environment.ProcessorCount);
+
+            // delegamos el calculo detallado en MetricBuffer.ToSnapshot
+            return MetricBuffer.ToSnapshot("default", _buffer, iters, grado);
         }
 
-        // Limpia buffers y contadores
+        // Limpia el estado interno para un nuevo escenario
         public void Reset()
         {
+            // vaciar cola de latencias
             while (_buffer.LatenciasTicks.TryDequeue(out _)) { }
+            // reiniciar contadores
             _buffer.Exitos = 0;
             _buffer.Fallos = 0;
             _buffer.Bytes = 0;
         }
 
-        // Control de timers del escenario
-        public void Start() { _buffer.StartTimers(); }
-        public (double cpuSeg, double memMb, double durSeg) Stop() { return _buffer.StopTimers(); }
+        // Marca inicio de ventana de medicion
+        public void Start()
+        {
+            _buffer.StartTimers();
+        }
+
+        // Marca fin de ventana de medicion y devuelve medidas brutas (cpu, mem, duracion)
+        public (double cpuSeg, double memMb, double durSeg) Stop()
+        {
+            return _buffer.StopTimers();
+        }
     }
 }
