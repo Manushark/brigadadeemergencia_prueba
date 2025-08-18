@@ -1,2 +1,0 @@
-﻿Nombre,Iteraciones,Exitos,Fallos,DuracionSeg,ThroughputOpsSeg,LatenciaMediaMs,P95Ms,P99Ms,Bytes,MemoriaMb,GradoParalelismo
-CPU_Demo,200,200,0,0.1955843,1022.5769655335322,2.6406435000000004,6.029100000000001,7.356000000000001,0,44.36328125,4

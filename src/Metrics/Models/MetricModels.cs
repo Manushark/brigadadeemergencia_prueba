@@ -5,39 +5,52 @@ using System.Linq;
 
 namespace BrigadasEmergenciaRD.Metrics.Models
 {
-    // Estructura interna mutable para acumular datos mientras corre el escenario.
-    // Responsabilidades:
-    // - Guardar latencias de cada operacion en una cola thread-safe.
-    // - Llevar contadores atomicos de exitos/fallos/bytes.
-    // - Medir duracion total del escenario con Stopwatch.
-    // - Leer memoria del proceso al finalizar para reportarla.
+    // Resumen inmutable de metricas
+    public sealed record MetricSnapshot
+    {
+        // nombre del escenario, ej: CPU_Secuencial
+        public string Nombre { get; init; } = "";
+        // cantidad de iteraciones
+        public int Iteraciones { get; init; }
+        // conteos de exito y fallo
+        public long Exitos { get; init; }
+        public long Fallos { get; init; }
+        // duracion total del escenario en segundos
+        public double DuracionSeg { get; init; }
+        // operaciones por segundo
+        public double ThroughputOpsSeg { get; init; }
+        // latencias en milisegundos
+        public double LatenciaMediaMs { get; init; }
+        public double P95Ms { get; init; }
+        public double P99Ms { get; init; }
+        // bytes totales procesados (opcional)
+        public long BytesProcesados { get; init; }
+        // info basica de proceso (aprox)
+        public double CpuProcesoSeg { get; init; }
+        public double MemoriaMb { get; init; }
+        // grado de paralelismo
+        public int GradoParalelismo { get; init; }
+        // marca de tiempo
+        public DateTimeOffset Timestamp { get; init; } = DateTimeOffset.Now;
+    }
+
+    // Buffer mutable interno para acumular latencias y contadores
     internal sealed class MetricBuffer
     {
-        // Cola concurrente con latencias por operacion (unidad: ticks de Stopwatch).
-        // Uso de ConcurrentQueue minimiza contencion al registrar muestras desde varios hilos.
+        // latencias por operacion en ticks
         public readonly ConcurrentQueue<long> LatenciasTicks = new();
-
-        // Contadores atomicos que se actualizan con Interlocked en el colector.
+        // contadores
         public long Exitos;
         public long Fallos;
         public long Bytes;
-
-        // Cronometro de la ventana total de medicion.
+        // reloj del escenario
         public readonly Stopwatch Reloj = new();
-
-        // Proceso actual: se usa para consultar WorkingSet (memoria) y CPU (si lo habilitas).
+        // proceso actual para memoria y cpu
         public readonly Process Proc = Process.GetCurrentProcess();
-
-        // CPU acumulada al inicio (guardada por si se decide exponerlo en el futuro).
         public TimeSpan CpuInicio;
-
-        // Memoria en MB al final del escenario (WorkingSet64 / 1024^2).
         public double MemoriaMb;
 
-        // Inicia la ventana de medicion del escenario completo.
-        // - Refresh del proceso por si hay datos obsoletos.
-        // - Guarda la CPU inicial.
-        // - Reinicia el cronometro.
+        // inicia timers
         public void StartTimers()
         {
             Proc.Refresh();
@@ -45,10 +58,7 @@ namespace BrigadasEmergenciaRD.Metrics.Models
             Reloj.Restart();
         }
 
-        // Detiene la ventana de medicion y devuelve medidas brutas:
-        // - cpuSeg: CPU de proceso usada durante el escenario (aprox).
-        // - memMb: WorkingSet en MB al final.
-        // - durSeg: duracion total en segundos.
+        // detiene timers y devuelve (cpuSeg, memMb, durSeg)
         public (double cpuSeg, double memMb, double durSeg) StopTimers()
         {
             Reloj.Stop();
@@ -58,29 +68,22 @@ namespace BrigadasEmergenciaRD.Metrics.Models
             return (cpuSeg, MemoriaMb, Reloj.Elapsed.TotalSeconds);
         }
 
-        // Crea un MetricSnapshot agregando estadisticos desde lo acumulado:
-        // - convierte ticks a ms
-        // - calcula media, p95, p99
-        // - calcula throughput
+        // convierte el buffer en snapshot calculando estadisticos
         public static MetricSnapshot ToSnapshot(string nombre, MetricBuffer b, int iters, int grado)
         {
-            // Se copia la cola a un arreglo para ordenar y calcular percentiles
             var lat = b.LatenciasTicks.ToArray();
-            Array.Sort(lat);
+            Array.Sort(lat); // requerido para percentiles
 
-            // Conversion de ticks a milisegundos:
-            //   ms = ticks * (1000 / Stopwatch.Frequency)
+            // conversion ticks -> ms
             double ticksToMs = 1000.0 / Stopwatch.Frequency;
 
-            // Estadisticos con manejo de caso vacio (sin muestras)
+            // media y percentiles (fallback a 0 si no hay datos)
             double media = lat.Length == 0 ? 0 : lat.Average() * ticksToMs;
             double p95 = lat.Length == 0 ? 0 : lat[(int)Math.Floor(0.95 * (lat.Length - 1))] * ticksToMs;
             double p99 = lat.Length == 0 ? 0 : lat[(int)Math.Floor(0.99 * (lat.Length - 1))] * ticksToMs;
 
-            // Duracion total medida por el cronometro del escenario
             var dur = b.Reloj.Elapsed.TotalSeconds;
 
-            // Ensambla el snapshot listo para exportar
             return new MetricSnapshot
             {
                 Nombre = nombre,
@@ -93,7 +96,7 @@ namespace BrigadasEmergenciaRD.Metrics.Models
                 P95Ms = p95,
                 P99Ms = p99,
                 BytesProcesados = b.Bytes,
-                CpuProcesoSeg = 0,  // reservado; por simplicidad no lo exponemos
+                CpuProcesoSeg = 0, // placeholder, no usado en reportes
                 MemoriaMb = b.MemoriaMb,
                 GradoParalelismo = grado,
                 Timestamp = DateTimeOffset.Now

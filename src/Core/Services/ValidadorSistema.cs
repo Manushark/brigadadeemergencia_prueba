@@ -6,60 +6,67 @@ using BrigadasEmergenciaRD.Core.Models;
 
 namespace BrigadasEmergenciaRD.Core.Services
 {
-    // Servicio basico para validacion de datos y configuraciones del sistema
-    // Se enfoca unicamente en validar la integridad de los modelos del Core
+  
+    // Servicio básico para validación de datos y configuraciones del sistema
+    // Se enfoca únicamente en validar la integridad de los modelos del Core
     public class ValidadorSistema
     {
-        // Valida la configuracion inicial basica del sistema
+      
+       // Valida la configuración inicial básica del sistema
+       
         public bool ValidarConfiguracionInicial()
         {
             try
             {
-                Console.WriteLine("Validando configuracion inicial...");
+                Console.WriteLine("🔍 Validando configuración inicial...");
 
-                // Validar que los enums esten correctamente definidos
+                // Validar que los enums estén correctamente definidos
                 if (!ValidarEnums())
                 {
-                    Console.WriteLine("Error en definicion de enums");
+                    Console.WriteLine("❌ Error en definición de enums");
                     return false;
                 }
 
-                Console.WriteLine("Configuracion inicial valida");
+                Console.WriteLine("✅ Configuración inicial válida");
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error validando configuracion: {ex.Message}");
+                Console.WriteLine($"❌ Error validando configuración: {ex.Message}");
                 return false;
             }
         }
 
+      
         // Valida una provincia y su estructura de datos
+       
         public bool ValidarProvincia(Provincia provincia)
         {
             if (provincia == null)
             {
-                Console.WriteLine("Provincia es nula");
+                Console.WriteLine("❌ Provincia es nula");
                 return false;
             }
 
             var errores = new List<string>();
 
-            // Validaciones basicas
+            // Validaciones básicas
             if (provincia.Id <= 0)
-                errores.Add("ID de provincia invalido");
+                errores.Add("ID de provincia inválido");
 
             if (string.IsNullOrWhiteSpace(provincia.Nombre))
-                errores.Add("Nombre de provincia vacio");
+                errores.Add("Nombre de provincia vacío");
 
             if (provincia.Poblacion < 0)
-                errores.Add("Poblacion no puede ser negativa");
+                errores.Add("Población no puede ser negativa");
 
+            if (provincia.AreaKm2 <= 0)
+                errores.Add("Área debe ser mayor que 0");
 
             if (provincia.Coordenadas == null)
                 errores.Add("Coordenadas son requeridas");
             else if (!ValidarCoordenada(provincia.Coordenadas))
-                errores.Add("Coordenadas invalidas");
+                errores.Add("Coordenadas inválidas");
 
             // Validar municipios
             if (provincia.Municipios != null)
@@ -67,13 +74,13 @@ namespace BrigadasEmergenciaRD.Core.Services
                 foreach (var municipio in provincia.Municipios)
                 {
                     if (!ValidarMunicipio(municipio))
-                        errores.Add($"Municipio invalido: {municipio?.Nombre ?? "Sin nombre"}");
+                        errores.Add($"Municipio inválido: {municipio?.Nombre ?? "Sin nombre"}");
                 }
             }
 
             if (errores.Any())
             {
-                Console.WriteLine($"Errores en provincia {provincia.Nombre}:");
+                Console.WriteLine($"❌ Errores en provincia {provincia.Nombre}:");
                 errores.ForEach(e => Console.WriteLine($"  - {e}"));
                 return false;
             }
@@ -81,7 +88,9 @@ namespace BrigadasEmergenciaRD.Core.Services
             return true;
         }
 
+      
         // Valida un municipio
+       
         public bool ValidarMunicipio(Municipio municipio)
         {
             if (municipio == null) return false;
@@ -93,7 +102,9 @@ namespace BrigadasEmergenciaRD.Core.Services
                    ValidarCoordenada(municipio.Coordenadas);
         }
 
+      
         // Valida un barrio
+       
         public bool ValidarBarrio(Barrio barrio)
         {
             if (barrio == null) return false;
@@ -105,7 +116,9 @@ namespace BrigadasEmergenciaRD.Core.Services
                    ValidarCoordenada(barrio.Coordenadas);
         }
 
+      
         // Valida una brigada
+       
         public bool ValidarBrigada(Brigada brigada)
         {
             if (brigada == null) return false;
@@ -113,26 +126,26 @@ namespace BrigadasEmergenciaRD.Core.Services
             var errores = new List<string>();
 
             if (brigada.Id <= 0)
-                errores.Add("ID invalido");
+                errores.Add("ID inválido");
 
             if (string.IsNullOrWhiteSpace(brigada.Nombre))
-                errores.Add("Nombre vacio");
+                errores.Add("Nombre vacío");
 
             if (!Enum.IsDefined(typeof(TipoBrigada), brigada.Tipo))
-                errores.Add("Tipo de brigada invalido");
+                errores.Add("Tipo de brigada inválido");
 
             if (!Enum.IsDefined(typeof(EstadoBrigada), brigada.Estado))
-                errores.Add("Estado de brigada invalido");
+                errores.Add("Estado de brigada inválido");
 
             if (brigada.CapacidadMaxima <= 0)
                 errores.Add("Capacidad debe ser mayor que 0");
 
             if (!ValidarCoordenada(brigada.UbicacionActual))
-                errores.Add("Ubicacion invalida");
+                errores.Add("Ubicación inválida");
 
             if (errores.Any())
             {
-                Console.WriteLine($"Errores en brigada {brigada.Nombre}:");
+                Console.WriteLine($"❌ Errores en brigada {brigada.Nombre}:");
                 errores.ForEach(e => Console.WriteLine($"  - {e}"));
                 return false;
             }
@@ -140,7 +153,9 @@ namespace BrigadasEmergenciaRD.Core.Services
             return true;
         }
 
+      
         // Valida una llamada de emergencia
+       
         public bool ValidarLlamadaEmergencia(LlamadaEmergencia llamada)
         {
             if (llamada == null) return false;
@@ -153,7 +168,9 @@ namespace BrigadasEmergenciaRD.Core.Services
                    llamada.BarrioId > 0;
         }
 
+      
         // Valida un evento de emergencia
+       
         public bool ValidarEmergenciaEvento(EmergenciaEvento evento)
         {
             if (evento == null) return false;
@@ -166,23 +183,26 @@ namespace BrigadasEmergenciaRD.Core.Services
                    evento.ProvinciaId > 0;
         }
 
-        // Valida coordenadas geograficas
+      
+        // Valida coordenadas geográficas
+       
         public bool ValidarCoordenada(Coordenada coordenada)
         {
             if (coordenada == null) return false;
 
-            // Validar rango de latitud y longitud para Republica Dominicana
+            // Validar rango de latitud y longitud para República Dominicana
             // RD aproximadamente: Latitud 17.5 - 19.9, Longitud -72.0 - -68.3
             return coordenada.Latitud >= 17.0 && coordenada.Latitud <= 20.0 &&
                    coordenada.Longitud >= -73.0 && coordenada.Longitud <= -68.0;
         }
 
-        // Valida que los enums esten correctamente definidos
+      
+       // Valida que los enums estén correctamente definidos
         private bool ValidarEnums()
         {
             try
             {
-                // Verificar que los enums tengan valores validos
+                // Verificar que los enums tengan valores válidos
                 var tiposEmergencia = Enum.GetValues<TipoEmergencia>();
                 var estadosBrigada = Enum.GetValues<EstadoBrigada>();
                 var tiposBrigada = Enum.GetValues<TipoBrigada>();
@@ -199,19 +219,20 @@ namespace BrigadasEmergenciaRD.Core.Services
             }
         }
 
+      
         // Valida el estado actual general del sistema
         public bool ValidarEstadoActual()
         {
             try
             {
-                // Validaciones basicas del sistema
+                // Validaciones básicas del sistema
                 var memoriaDisponible = GC.GetTotalMemory(false);
                 var procesadores = Environment.ProcessorCount;
 
-                Console.WriteLine($"Memoria en uso: {memoriaDisponible / (1024 * 1024)} MB");
-                Console.WriteLine($"Procesadores disponibles: {procesadores}");
+                Console.WriteLine($"💾 Memoria en uso: {memoriaDisponible / (1024 * 1024)} MB");
+                Console.WriteLine($"⚡ Procesadores disponibles: {procesadores}");
 
-                // Sistema esta en buen estado si tiene recursos basicos
+                // Sistema está en buen estado si tiene recursos básicos
                 return memoriaDisponible < 500 * 1024 * 1024 && // Menos de 500MB
                        procesadores > 0;
             }
@@ -221,6 +242,7 @@ namespace BrigadasEmergenciaRD.Core.Services
             }
         }
 
+      
         // Valida compatibilidad entre brigada y emergencia
         public bool ValidarCompatibilidadBrigadaEmergencia(Brigada brigada, TipoEmergencia tipoEmergencia)
         {
@@ -229,10 +251,11 @@ namespace BrigadasEmergenciaRD.Core.Services
             return brigada.PuedeAtender(tipoEmergencia);
         }
 
-        // Genera reporte de validacion de una lista de provincias
+      
+        // Genera reporte de validación de una lista de provincias
         public string GenerarReporteValidacion(IEnumerable<Provincia> provincias)
         {
-            if (provincias == null) return "Lista de provincias es nula";
+            if (provincias == null) return "❌ Lista de provincias es nula";
 
             var provinciasList = provincias.ToList();
             var totalProvincias = provinciasList.Count;
@@ -242,78 +265,12 @@ namespace BrigadasEmergenciaRD.Core.Services
                                            .SelectMany(m => m.Barrios ?? new List<Barrio>()).Count();
 
             return $@"
-REPORTE DE VALIDACION:
-- Provincias validas: {provinciasValidas}/{totalProvincias}
+📋 REPORTE DE VALIDACIÓN:
+- Provincias válidas: {provinciasValidas}/{totalProvincias}
 - Total municipios: {totalMunicipios}
 - Total barrios: {totalBarrios}
-- Estado general: {(provinciasValidas == totalProvincias ? "VALIDO" : "CON ERRORES")}
+- Estado general: {(provinciasValidas == totalProvincias ? "✅ VÁLIDO" : "⚠️ CON ERRORES")}
 ";
-        }
-
-        // Valida que una brigada este en estado valido para operar
-        public bool ValidarEstadoOperativoBrigada(Brigada brigada)
-        {
-            if (brigada == null) return false;
-
-            // Estados que permiten operacion
-            var estadosOperativos = new[]
-            {
-                EstadoBrigada.Disponible,
-                EstadoBrigada.EnRuta,
-                EstadoBrigada.AtendendoEmergencia,
-                EstadoBrigada.Regresando
-            };
-
-            return estadosOperativos.Contains(brigada.Estado) &&
-                   brigada.CapacidadMaxima > 0 &&
-                   ValidarCoordenada(brigada.UbicacionActual);
-        }
-
-        // Valida que una emergencia este en tiempo aceptable
-        public bool ValidarTiempoEmergencia(LlamadaEmergencia llamada, TimeSpan tiempoMaximoEspera)
-        {
-            if (llamada == null) return false;
-
-            var tiempoEspera = llamada.TiempoEspera();
-            return tiempoEspera <= tiempoMaximoEspera;
-        }
-
-        // Valida integridad de relaciones entre modelos
-        public bool ValidarIntegridadRelaciones(Provincia provincia)
-        {
-            if (provincia == null) return false;
-
-            // Verificar que municipios tengan referencia correcta a provincia
-            foreach (var municipio in provincia.Municipios ?? new List<Municipio>())
-            {
-                if (municipio.ProvinciaId != provincia.Id)
-                    return false;
-
-                // Verificar que barrios tengan referencia correcta a municipio
-                foreach (var barrio in municipio.Barrios ?? new List<Barrio>())
-                {
-                    if (barrio.MunicipioId != municipio.Id)
-                        return false;
-                }
-            }
-
-            return true;
-        }
-
-        // Valida que los datos de poblacion sean consistentes
-        public bool ValidarConsistenciaPoblacion(Provincia provincia)
-        {
-            if (provincia == null) return false;
-
-            var poblacionMunicipios = provincia.Municipios?.Sum(m => m.Poblacion) ?? 0;
-            var poblacionBarrios = provincia.Municipios?
-                .SelectMany(m => m.Barrios ?? new List<Barrio>())
-                .Sum(b => b.Poblacion) ?? 0;
-
-            // La poblacion de barrios no deberia exceder la de municipios
-            // La poblacion de municipios no deberia exceder mucho la de la provincia
-            return poblacionBarrios <= poblacionMunicipios * 1.1 && // 10% tolerancia
-                   poblacionMunicipios <= provincia.Poblacion * 1.1;
         }
     }
 }

@@ -9,15 +9,41 @@
         "barrios": [
           {
             "id": "010101",
-            "nombre": "Zona Colonial"
+            "nombre": "Zona Colonial",
+            "subbarrios": [
+              {
+                "id": "01010101",
+                "nombre": "Ciudad Nueva"
+              },
+              {
+                "id": "01010102",
+                "nombre": "San Carlos"
+              }
+            ]
           },
           {
             "id": "010102",
-            "nombre": "Gazcue"
+            "nombre": "Gazcue",
+            "subbarrios": [
+              {
+                "id": "01010201",
+                "nombre": "Don Bosco"
+              },
+              {
+                "id": "01010202",
+                "nombre": "San Juan Bosco"
+              }
+            ]
           },
           {
             "id": "010103",
-            "nombre": "Piantini"
+            "nombre": "Piantini",
+            "subbarrios": [
+              {
+                "id": "01010301",
+                "nombre": "Ensanche Paraíso"
+              }
+            ]
           }
         ]
       }
@@ -33,15 +59,18 @@
         "barrios": [
           {
             "id": "020101",
-            "nombre": "La Bombita"
+            "nombre": "La Bombita",
+            "subbarrios": []
           },
           {
             "id": "020102",
-            "nombre": "El Prado"
+            "nombre": "El Prado",
+            "subbarrios": []
           },
           {
             "id": "020103",
-            "nombre": "Las Yayas"
+            "nombre": "Las Yayas",
+            "subbarrios": []
           }
         ]
       },
@@ -51,11 +80,13 @@
         "barrios": [
           {
             "id": "020201",
-            "nombre": "Villa Ocoa"
+            "nombre": "Villa Ocoa",
+            "subbarrios": []
           },
           {
             "id": "020202",
-            "nombre": "Las Lomas"
+            "nombre": "Las Lomas",
+            "subbarrios": []
           }
         ]
       }
@@ -71,15 +102,18 @@
         "barrios": [
           {
             "id": "030101",
-            "nombre": "Villa Esperanza"
+            "nombre": "Villa Esperanza",
+            "subbarrios": []
           },
           {
             "id": "030102",
-            "nombre": "El Manguito"
+            "nombre": "El Manguito",
+            "subbarrios": []
           },
           {
             "id": "030103",
-            "nombre": "San Bartolomé"
+            "nombre": "San Bartolomé",
+            "subbarrios": []
           }
         ]
       },
@@ -89,11 +123,13 @@
         "barrios": [
           {
             "id": "030201",
-            "nombre": "Santana"
+            "nombre": "Santana",
+            "subbarrios": []
           },
           {
             "id": "030202",
-            "nombre": "Los Conuquitos"
+            "nombre": "Los Conuquitos",
+            "subbarrios": []
           }
         ]
       }
@@ -109,15 +145,18 @@
         "barrios": [
           {
             "id": "040101",
-            "nombre": "Palmarito"
+            "nombre": "Palmarito",
+            "subbarrios": []
           },
           {
             "id": "040102",
-            "nombre": "La Playa"
+            "nombre": "La Playa",
+            "subbarrios": []
           },
           {
             "id": "040103",
-            "nombre": "Enriquillo"
+            "nombre": "Enriquillo",
+            "subbarrios": []
           }
         ]
       },
@@ -127,11 +166,13 @@
         "barrios": [
           {
             "id": "040201",
-            "nombre": "La Ciénaga"
+            "nombre": "La Ciénaga",
+            "subbarrios": []
           },
           {
             "id": "040202",
-            "nombre": "El Fondo"
+            "nombre": "El Fondo",
+            "subbarrios": []
           }
         ]
       }
@@ -147,15 +188,18 @@
         "barrios": [
           {
             "id": "050101",
-            "nombre": "Barrio Norte"
+            "nombre": "Barrio Norte",
+            "subbarrios": []
           },
           {
             "id": "050102",
-            "nombre": "Barrio Sur"
+            "nombre": "Barrio Sur",
+            "subbarrios": []
           },
           {
             "id": "050103",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       },
@@ -165,11 +209,13 @@
         "barrios": [
           {
             "id": "050201",
-            "nombre": "La Fe"
+            "nombre": "La Fe",
+            "subbarrios": []
           },
           {
             "id": "050202",
-            "nombre": "El Pino"
+            "nombre": "El Pino",
+            "subbarrios": []
           }
         ]
       }
@@ -185,15 +231,23 @@
         "barrios": [
           {
             "id": "060101",
-            "nombre": "Santa Ana"
+            "nombre": "Santa Ana",
+            "subbarrios": [
+              {
+                "id": "06010101",
+                "nombre": "Santa Ana Centro"
+              }
+            ]
           },
           {
             "id": "060102",
-            "nombre": "La Javiela"
+            "nombre": "La Javiela",
+            "subbarrios": []
           },
           {
             "id": "060103",
-            "nombre": "Rabo de Chivo"
+            "nombre": "Rabo de Chivo",
+            "subbarrios": []
           }
         ]
       },
@@ -203,11 +257,13 @@
         "barrios": [
           {
             "id": "060201",
-            "nombre": "Cristo Rey"
+            "nombre": "Cristo Rey",
+            "subbarrios": []
           },
           {
             "id": "060202",
-            "nombre": "El Indio"
+            "nombre": "El Indio",
+            "subbarrios": []
           }
         ]
       }
@@ -223,15 +279,18 @@
         "barrios": [
           {
             "id": "070101",
-            "nombre": "Los Jobos"
+            "nombre": "Los Jobos",
+            "subbarrios": []
           },
           {
             "id": "070102",
-            "nombre": "El Llano"
+            "nombre": "El Llano",
+            "subbarrios": []
           },
           {
             "id": "070103",
-            "nombre": "La Palma"
+            "nombre": "La Palma",
+            "subbarrios": []
           }
         ]
       }
@@ -247,15 +306,18 @@
         "barrios": [
           {
             "id": "080101",
-            "nombre": "Ginandiana"
+            "nombre": "Ginandiana",
+            "subbarrios": []
           },
           {
             "id": "080102",
-            "nombre": "Los Hoyitos"
+            "nombre": "Los Hoyitos",
+            "subbarrios": []
           },
           {
             "id": "080103",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -271,11 +333,13 @@
         "barrios": [
           {
             "id": "090101",
-            "nombre": "Las Baitoas"
+            "nombre": "Las Baitoas",
+            "subbarrios": []
           },
           {
             "id": "090102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -291,11 +355,13 @@
         "barrios": [
           {
             "id": "100101",
-            "nombre": "Los Cocos"
+            "nombre": "Los Cocos",
+            "subbarrios": []
           },
           {
             "id": "100102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -311,15 +377,18 @@
         "barrios": [
           {
             "id": "110101",
-            "nombre": "Savica"
+            "nombre": "Savica",
+            "subbarrios": []
           },
           {
             "id": "110102",
-            "nombre": "San José"
+            "nombre": "San José",
+            "subbarrios": []
           },
           {
             "id": "110103",
-            "nombre": "Boca de Yuma"
+            "nombre": "Boca de Yuma",
+            "subbarrios": []
           }
         ]
       }
@@ -335,15 +404,18 @@
         "barrios": [
           {
             "id": "120101",
-            "nombre": "Villa Verde"
+            "nombre": "Villa Verde",
+            "subbarrios": []
           },
           {
             "id": "120102",
-            "nombre": "San Carlos"
+            "nombre": "San Carlos",
+            "subbarrios": []
           },
           {
             "id": "120103",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -359,15 +431,18 @@
         "barrios": [
           {
             "id": "130101",
-            "nombre": "San Miguel"
+            "nombre": "San Miguel",
+            "subbarrios": []
           },
           {
             "id": "130102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           },
           {
             "id": "130103",
-            "nombre": "Buenos Aires"
+            "nombre": "Buenos Aires",
+            "subbarrios": []
           }
         ]
       }
@@ -383,11 +458,13 @@
         "barrios": [
           {
             "id": "140101",
-            "nombre": "Las Flores"
+            "nombre": "Las Flores",
+            "subbarrios": []
           },
           {
             "id": "140102",
-            "nombre": "La Playa"
+            "nombre": "La Playa",
+            "subbarrios": []
           }
         ]
       }
@@ -403,11 +480,13 @@
         "barrios": [
           {
             "id": "150101",
-            "nombre": "Los Cacaos"
+            "nombre": "Los Cacaos",
+            "subbarrios": []
           },
           {
             "id": "150102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -423,11 +502,13 @@
         "barrios": [
           {
             "id": "160101",
-            "nombre": "El Pinar"
+            "nombre": "El Pinar",
+            "subbarrios": []
           },
           {
             "id": "160102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -443,11 +524,13 @@
         "barrios": [
           {
             "id": "170101",
-            "nombre": "San Pedro"
+            "nombre": "San Pedro",
+            "subbarrios": []
           },
           {
             "id": "170102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -463,11 +546,13 @@
         "barrios": [
           {
             "id": "180101",
-            "nombre": "Los Mangos"
+            "nombre": "Los Mangos",
+            "subbarrios": []
           },
           {
             "id": "180102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -483,15 +568,18 @@
         "barrios": [
           {
             "id": "190101",
-            "nombre": "Los Mameyes"
+            "nombre": "Los Mameyes",
+            "subbarrios": []
           },
           {
             "id": "190102",
-            "nombre": "Playa Oeste"
+            "nombre": "Playa Oeste",
+            "subbarrios": []
           },
           {
             "id": "190103",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -507,11 +595,13 @@
         "barrios": [
           {
             "id": "200101",
-            "nombre": "Meseta"
+            "nombre": "Meseta",
+            "subbarrios": []
           },
           {
             "id": "200102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -527,11 +617,13 @@
         "barrios": [
           {
             "id": "210101",
-            "nombre": "Santa Rosa"
+            "nombre": "Santa Rosa",
+            "subbarrios": []
           },
           {
             "id": "210102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -547,11 +639,13 @@
         "barrios": [
           {
             "id": "220101",
-            "nombre": "Alcoa"
+            "nombre": "Alcoa",
+            "subbarrios": []
           },
           {
             "id": "220102",
-            "nombre": "Las Lagunas"
+            "nombre": "Las Lagunas",
+            "subbarrios": []
           }
         ]
       }
@@ -567,11 +661,13 @@
         "barrios": [
           {
             "id": "230101",
-            "nombre": "Los Maestros"
+            "nombre": "Los Maestros",
+            "subbarrios": []
           },
           {
             "id": "230102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -587,11 +683,13 @@
         "barrios": [
           {
             "id": "240101",
-            "nombre": "La Esperanza"
+            "nombre": "La Esperanza",
+            "subbarrios": []
           },
           {
             "id": "240102",
-            "nombre": "Los Cocos"
+            "nombre": "Los Cocos",
+            "subbarrios": []
           }
         ]
       }
@@ -607,15 +705,23 @@
         "barrios": [
           {
             "id": "250101",
-            "nombre": "Cerro Alto"
+            "nombre": "Cerro Alto",
+            "subbarrios": [
+              {
+                "id": "25010101",
+                "nombre": "Cerro Alto Centro"
+              }
+            ]
           },
           {
             "id": "250102",
-            "nombre": "Los Jardines Metropolitanos"
+            "nombre": "Los Jardines Metropolitanos",
+            "subbarrios": []
           },
           {
             "id": "250103",
-            "nombre": "Cienfuegos"
+            "nombre": "Cienfuegos",
+            "subbarrios": []
           }
         ]
       }
@@ -631,11 +737,13 @@
         "barrios": [
           {
             "id": "260101",
-            "nombre": "Los Multis"
+            "nombre": "Los Multis",
+            "subbarrios": []
           },
           {
             "id": "260102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -651,11 +759,13 @@
         "barrios": [
           {
             "id": "270101",
-            "nombre": "Gualey"
+            "nombre": "Gualey",
+            "subbarrios": []
           },
           {
             "id": "270102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -671,11 +781,13 @@
         "barrios": [
           {
             "id": "280101",
-            "nombre": "Los Amigos"
+            "nombre": "Los Amigos",
+            "subbarrios": []
           },
           {
             "id": "280102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -691,15 +803,18 @@
         "barrios": [
           {
             "id": "290101",
-            "nombre": "Madre Vieja Norte"
+            "nombre": "Madre Vieja Norte",
+            "subbarrios": []
           },
           {
             "id": "290102",
-            "nombre": "5 de Abril"
+            "nombre": "5 de Abril",
+            "subbarrios": []
           },
           {
             "id": "290103",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
@@ -715,15 +830,23 @@
         "barrios": [
           {
             "id": "300101",
-            "nombre": "Los Mina"
+            "nombre": "Los Mina",
+            "subbarrios": [
+              {
+                "id": "30010101",
+                "nombre": "Los Mina Centro"
+              }
+            ]
           },
           {
             "id": "300102",
-            "nombre": "La Ureña"
+            "nombre": "La Ureña",
+            "subbarrios": []
           },
           {
             "id": "300103",
-            "nombre": "El Almirante"
+            "nombre": "El Almirante",
+            "subbarrios": []
           }
         ]
       },
@@ -733,11 +856,13 @@
         "barrios": [
           {
             "id": "300201",
-            "nombre": "Sabana Perdida"
+            "nombre": "Sabana Perdida",
+            "subbarrios": []
           },
           {
             "id": "300202",
-            "nombre": "Villa Mella"
+            "nombre": "Villa Mella",
+            "subbarrios": []
           }
         ]
       },
@@ -747,11 +872,13 @@
         "barrios": [
           {
             "id": "300301",
-            "nombre": "Manoguayabo"
+            "nombre": "Manoguayabo",
+            "subbarrios": []
           },
           {
             "id": "300302",
-            "nombre": "Herrera"
+            "nombre": "Herrera",
+            "subbarrios": []
           }
         ]
       }
@@ -767,11 +894,13 @@
         "barrios": [
           {
             "id": "310101",
-            "nombre": "Hatico"
+            "nombre": "Hatico",
+            "subbarrios": []
           },
           {
             "id": "310102",
-            "nombre": "La Altagracia"
+            "nombre": "La Altagracia",
+            "subbarrios": []
           }
         ]
       }
@@ -787,11 +916,13 @@
         "barrios": [
           {
             "id": "320101",
-            "nombre": "Los Mangos"
+            "nombre": "Los Mangos",
+            "subbarrios": []
           },
           {
             "id": "320102",
-            "nombre": "El Centro"
+            "nombre": "El Centro",
+            "subbarrios": []
           }
         ]
       }
